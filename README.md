@@ -6,7 +6,7 @@ running and navigation with Turtelbot3
 1- Install turthbox3 
 2- Set model 
 3-Launch Simulation World
-4- Run Navigation Node
+4- Run Navigation Node AND create map 
 5- Set Navigation Goal
 
 
@@ -41,19 +41,35 @@ sudo apt-get install ros-noetic-dwa-local-planner
 echo "export TURTLEBOT3_MODEL=waffle" >> ~/.bashrc
 source ~/.bashrc
 ```
+# Create a Map
+```
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+```
 
+Launch the teleoperation node (in a new terminal):
+
+```
+ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+
+ using the keyboard to create a map. Use the following keys to control the TurtleBot:
+a: turn left
+d: turn right
+w: move forward
+x: move backward
+s: stop
+q to stop the TurtleBot
+
+Save the map (once you are satisfied with the generated map):
+
+```
+rosrun map_server map_saver -f ~/map
+```
+
+Then close the teleoperation terminal
 
 # Launch-Simulation-World
 Navigation is to move the robot from one location to the specified destination in a given environment. For this purpose, a map that contains geometry information of furniture, objects, and walls of the given environment is required. As described in the previous SLAM section, the map was created with the distance information obtained by the sensor and the pose information of the robot itself.
-
-Please use the proper keyword among burger , waffle , waffle_pi for the TURTLEBOT3_MODEL parameter.
-
-
-```
-$ export TURTLEBOT3_MODEL=waffle
-
-$ roslaunch turtlebot3_gazebo turtlebot3_world.launch
-```
 
 <img width="614" alt="image" src="https://github.com/user-attachments/assets/75a0386d-0ecb-44ab-8b9a-54808d4e1eab">
 
